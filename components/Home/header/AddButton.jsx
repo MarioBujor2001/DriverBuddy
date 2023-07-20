@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 
-export default function Menu() {
+export default function AddButton() {
     return (
         <TouchableOpacity style={styles.button}>
-            <Image source={require('../../assets/menu.png')} style={styles.menuImage} />
+            <Image source={require('../../../assets/plus.png')} style={styles.addImage} />
         </TouchableOpacity>
     )
 }
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
         height: 60,
         width: 60,
     },
-    menuImage: {
-        width: 50,
-        height: 50
+    addImage: {
+        width: 40,
+        height: 40
     }
 })

@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView, View } from 'react-native';
-import Menu from './Menu';
-import AddButton from './AddButton';
-import MonthsBar from './MonthsBar';
+import Menu from './header/Menu'
+import AddButton from './header/AddButton';
+import MonthsBar from './monthsBar/MonthsBar';
 export default function Home({ navigation }) {
     return (
         <View style={styles.container}>
