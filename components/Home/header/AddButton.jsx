@@ -1,8 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 
-export default function AddButton() {
+export default function AddButton({ setModalVisible }) {
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+            style={styles.button}
+            onPress={() => { setModalVisible(true); }}
+        >
             <Image source={require('../../../assets/plus.png')} style={styles.addImage} />
         </TouchableOpacity>
     )
