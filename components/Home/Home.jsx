@@ -6,11 +6,15 @@ import EntriesList from './content/EntriesList';
 import TotalIncome from './content/TotalIncome';
 import { useState } from 'react';
 import AddModal from './addModal/AddModal';
+import InfoModal from './infoModal/InfoModal'
 import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
+    const [infoModalVisible, setInfoModalVisible] = useState(false);
+    const [dayInfo, setDayInfo] = useState({});
     return (
         <View style={styles.container}>
+            {/* adding modal */}
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -27,6 +31,23 @@ export default function Home({ navigation }) {
                     />
                 </ScrollView>
             </Modal>
+            {/* info modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={infoModalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setInfoModalVisible(!infoModalVisible);
+                }}>
+                <ScrollView contentContainerStyle={styles.absoluteView} keyboardShouldPersistTaps='handled'>
+                    <InfoModal
+                        infoModalVisible={infoModalVisible}
+                        setInfoModalVisible={setInfoModalVisible}
+                        dayInfo={dayInfo}
+                    />
+                </ScrollView>
+            </Modal>
             <View style={styles.header}>
                 <Menu />
                 <AddButton
@@ -38,7 +59,11 @@ export default function Home({ navigation }) {
                 <MonthsBar />
             </View>
             <View style={styles.entriesContainer}>
-                <EntriesList />
+                <EntriesList
+                    infoModalVisible={infoModalVisible}
+                    setInfoModalVisible={setInfoModalVisible}
+                    setDayInfo={setDayInfo}
+                />
                 <TotalIncome month={'Iulie'} total={'2450.5'} />
             </View>
         </View>

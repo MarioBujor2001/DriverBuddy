@@ -1,11 +1,13 @@
 import { StyleSheet, SafeAreaView, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-export default function EntryItem({ item }) {
+export default function EntryItem({ item, openInfo, setInfoModalVisible }) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => { openInfo(item); }}
+        >
             <View style={styles.item}>
                 <View style={[styles.indicator, styles.date]}>
-                    <Text>{item.date}</Text>
+                    <Text>{item.date.substr(0, 5)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.km]}>
                     <Text>KM:{item.km}</Text>

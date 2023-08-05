@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     label: {
         color: 'black',
         fontWeight: 'bold',
-        textAlign: '',
+        textAlign: 'center',
         textAlignVertical: 'center',
         fontSize: 20,
         width: 90
