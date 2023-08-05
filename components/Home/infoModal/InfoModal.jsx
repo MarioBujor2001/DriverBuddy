@@ -1,18 +1,6 @@
 import { StyleSheet, View, Text, Image, Pressable, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-
+import { computeNetIncome, computeCost, computeHourlyIncome, computeRideIncome, computeIncome } from '../computeUtils';
 export default function InfoModal({ infoModalVisible, setInfoModalVisible, dayInfo }) {
-    const computeCost = (data) => {
-        return (data.km * data.gasCons / 100 * data.gasPrice).toFixed(2);
-    }
-    const computeNetIncome = (data) => {
-        return data.ridesIncome + data.tipsIncome - computeCost(data);
-    }
-    const computeHourlyIncome = (data) => {
-        return (computeNetIncome(data) / data.noHours).toFixed(2);
-    }
-    const computeRideIncome = (data) => {
-        return (computeNetIncome(data) / data.noRides).toFixed(2);
-    }
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -53,7 +41,7 @@ export default function InfoModal({ infoModalVisible, setInfoModalVisible, dayIn
             <View style={styles.summaryContainer}>
                 <View style={[styles.textStyle, styles.summaryOutput, styles.blue, styles.center, { flexDirection: 'row' }]}>
                     <Image source={require('../../../assets/plus.png')} style={styles.image} />
-                    <TextInput style={[styles.textStyle]} value={dayInfo.ridesIncome + dayInfo.tipsIncome + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
+                    <TextInput style={[styles.textStyle]} value={computeIncome(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
                 </View>
                 <View style={[styles.textStyle, styles.summaryOutput, styles.red, styles.center, { flexDirection: 'row' }]}>
                     <Image source={require('../../../assets/gas-station.png')} style={styles.image} />

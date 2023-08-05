@@ -1,23 +1,7 @@
 import { StyleSheet, SafeAreaView, View, FlatList } from 'react-native';
 import { useState } from 'react';
 import MonthItem from './MonthItem';
-export default function MonthsBar() {
-
-    const [months, setMonths] = useState([
-        { id: 0, name: 'Ianuarie' },
-        { id: 1, name: 'Februarie' },
-        { id: 2, name: 'Martie' },
-        { id: 3, name: 'Aprilie' },
-        { id: 4, name: 'Mai' },
-        { id: 5, name: 'Iunie' },
-        { id: 6, name: 'Iulie' },
-        { id: 7, name: 'August' },
-        { id: 8, name: 'Septembrie' },
-        { id: 9, name: 'Octombrie' },
-        { id: 10, name: 'Noiembrie' },
-        { id: 11, name: 'Decembrie' }]);
-
-    const [monthSelected, setMonthSelected] = useState(new Date().getMonth());
+export default function MonthsBar({ months, setMonths, monthSelected, setMonthSelected }) {
 
     const changeSelectedMonth = (month) => {
         setMonthSelected(month);

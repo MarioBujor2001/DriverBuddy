@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView, View, Text, FlatList, TouchableOpacity } from 'react-native';
-
+import { computeNetIncome, computeCost, computeIncome } from '../computeUtils';
 export default function EntryItem({ item, openInfo, setInfoModalVisible }) {
     return (
         <TouchableOpacity
@@ -10,16 +10,16 @@ export default function EntryItem({ item, openInfo, setInfoModalVisible }) {
                     <Text>{item.date.substr(0, 5)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.km]}>
-                    <Text>KM:{item.km}</Text>
+                    <Text>{item.km} KM</Text>
                 </View>
                 <View style={[styles.indicator, styles.income]}>
-                    <Text>+ {item.income}</Text>
+                    <Text>+ {computeIncome(item)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.cost]}>
-                    <Text>- {item.cost}</Text>
+                    <Text>- {computeCost(item)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.netIncome]}>
-                    <Text>= {item.netIncome}</Text>
+                    <Text>= {computeNetIncome(item)}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -53,15 +53,15 @@ const styles = StyleSheet.create({
     },
     km: {
         backgroundColor: '#fff',
-        width: 65
+        width: 70
     },
     income: {
         backgroundColor: '#90BBE2',
-        width: 65
+        width: 70
     },
     cost: {
         backgroundColor: '#FFA6A6',
-        width: 65
+        width: 70
     },
     netIncome: {
         backgroundColor: '#92E290',

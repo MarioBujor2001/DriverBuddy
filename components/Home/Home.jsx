@@ -12,6 +12,21 @@ export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [infoModalVisible, setInfoModalVisible] = useState(false);
     const [dayInfo, setDayInfo] = useState({});
+    const [months, setMonths] = useState([
+        { id: 0, name: 'Ianuarie' },
+        { id: 1, name: 'Februarie' },
+        { id: 2, name: 'Martie' },
+        { id: 3, name: 'Aprilie' },
+        { id: 4, name: 'Mai' },
+        { id: 5, name: 'Iunie' },
+        { id: 6, name: 'Iulie' },
+        { id: 7, name: 'August' },
+        { id: 8, name: 'Septembrie' },
+        { id: 9, name: 'Octombrie' },
+        { id: 10, name: 'Noiembrie' },
+        { id: 11, name: 'Decembrie' }]);
+    const [monthSelected, setMonthSelected] = useState(new Date().getMonth());
+    const [total, setTotal] = useState(0);
     return (
         <View style={styles.container}>
             {/* adding modal */}
@@ -56,15 +71,21 @@ export default function Home({ navigation }) {
                 />
             </View>
             <View style={styles.monthsBar}>
-                <MonthsBar />
+                <MonthsBar
+                    months={months}
+                    setMonths={setMonths}
+                    monthSelected={monthSelected}
+                    setMonthSelected={setMonthSelected} />
             </View>
             <View style={styles.entriesContainer}>
                 <EntriesList
                     infoModalVisible={infoModalVisible}
                     setInfoModalVisible={setInfoModalVisible}
                     setDayInfo={setDayInfo}
+                    monthSelected={monthSelected}
+                    setTotal={setTotal}
                 />
-                <TotalIncome month={'Iulie'} total={'2450.5'} />
+                <TotalIncome month={months[monthSelected].name} total={total} />
             </View>
         </View>
     )
