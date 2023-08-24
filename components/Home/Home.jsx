@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Modal, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Alert } from 'react-native';
 import Menu from './header/Menu'
 import AddButton from './header/AddButton';
 import MonthsBar from './monthsBar/MonthsBar';
@@ -6,8 +6,10 @@ import EntriesList from './content/EntriesList';
 import TotalIncome from './content/TotalIncome';
 import { useState } from 'react';
 import AddModal from './addModal/AddModal';
-import InfoModal from './infoModal/InfoModal'
-import { SafeAreaView } from 'react-native-safe-area-context';
+import InfoModal from './infoModal/InfoModal';
+import data from './content/data';
+import { useEffect } from 'react';
+import { computeNetIncome } from './computeUtils';
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [infoModalVisible, setInfoModalVisible] = useState(false);
@@ -27,6 +29,18 @@ export default function Home({ navigation }) {
         { id: 11, name: 'Decembrie' }]);
     const [monthSelected, setMonthSelected] = useState(new Date().getMonth());
     const [total, setTotal] = useState(0);
+    const [usedData, setUsedData] = useState(data);
+    useEffect(() => {
+        const filtered = data.filter((e) => parseInt(e.date.split('.')[1]) === monthSelected + 1)
+        setUsedData(filtered);
+        setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2))
+    }, [monthSelected])
+
+    const handleAddEntry = (entry) => {
+        const updated = [...usedData, entry];
+        setUsedData(updated);
+    }
+
     return (
         <View style={styles.container}>
             {/* adding modal */}
@@ -43,6 +57,8 @@ export default function Home({ navigation }) {
                     <AddModal
                         modalVisible={modalVisible}
                         setModalVisible={setModalVisible}
+                        handleAddEntry={handleAddEntry}
+                        usedData={usedData}
                     />
                 </ScrollView>
             </Modal>
@@ -79,11 +95,9 @@ export default function Home({ navigation }) {
             </View>
             <View style={styles.entriesContainer}>
                 <EntriesList
-                    infoModalVisible={infoModalVisible}
                     setInfoModalVisible={setInfoModalVisible}
                     setDayInfo={setDayInfo}
-                    monthSelected={monthSelected}
-                    setTotal={setTotal}
+                    usedData={usedData}
                 />
                 <TotalIncome month={months[monthSelected].name} total={total} />
             </View>

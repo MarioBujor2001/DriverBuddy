@@ -13,3 +13,10 @@ export const computeHourlyIncome = (data) => {
 export const computeRideIncome = (data) => {
     return (computeNetIncome(data) / data.noRides).toFixed(2);
 }
+export const formatDateToDdMmYyyy = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}.${month}.${year}`;
+}

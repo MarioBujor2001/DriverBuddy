@@ -39,27 +39,27 @@ export default function InfoModal({ infoModalVisible, setInfoModalVisible, dayIn
             </View>
             {/* ride summary */}
             <View style={styles.summaryContainer}>
-                <View style={[styles.textStyle, styles.summaryOutput, styles.blue, styles.center, { flexDirection: 'row' }]}>
+                <View style={[styles.smallerTextStyle, styles.summaryOutput, styles.blue, styles.center, { flexDirection: 'row' }]}>
                     <Image source={require('../../../assets/plus.png')} style={styles.image} />
-                    <TextInput style={[styles.textStyle]} value={computeIncome(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
+                    <TextInput style={[styles.smallerTextStyle]} value={computeIncome(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
                 </View>
-                <View style={[styles.textStyle, styles.summaryOutput, styles.red, styles.center, { flexDirection: 'row' }]}>
+                <View style={[styles.smallerTextStyle, styles.summaryOutput, styles.red, styles.center, { flexDirection: 'row' }]}>
                     <Image source={require('../../../assets/gas-station.png')} style={styles.image} />
-                    <TextInput style={[styles.textStyle]} value={computeCost(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
+                    <TextInput style={[styles.smallerTextStyle]} value={computeCost(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
                 </View>
-                <View style={[styles.textStyle, styles.summaryOutput, styles.green, styles.center, { flexDirection: 'row' }]}>
+                <View style={[styles.smallerTextStyle, styles.summaryOutput, styles.green, styles.center, { flexDirection: 'row' }]}>
                     <Image source={require('../../../assets/equal.png')} style={styles.image} />
-                    <TextInput style={[styles.textStyle]} value={computeNetIncome(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
+                    <TextInput style={[styles.smallerTextStyle]} value={computeNetIncome(dayInfo) + " RON"} keyboardType='numeric' maxLength={2} editable={false} />
                 </View>
             </View>
             <View style={[styles.summaryContainer, styles.summaryStatistics, styles.green, { justifyContent: 'space-evenly' }]}>
-                <View style={[styles.textStyle, styles.summaryOutput, styles.green, styles.center, { flexDirection: 'row', width: 200 }]}>
+                <View style={[styles.smallerTextStyle, styles.summaryOutput, styles.green, styles.center, { flexDirection: 'row', width: 150 }]}>
                     <Image source={require('../../../assets/plus.png')} style={styles.image} />
-                    <TextInput style={[styles.textStyle]} value={computeHourlyIncome(dayInfo) + " RON/H"} keyboardType='numeric' maxLength={2} editable={false} />
+                    <TextInput style={[styles.smallerTextStyle]} value={computeHourlyIncome(dayInfo) + " RON/H"} keyboardType='numeric' maxLength={2} editable={false} />
                 </View>
-                <View style={[styles.textStyle, styles.summaryOutput, styles.green, styles.center, { flexDirection: 'row', width: 200 }]}>
-                    <Image source={require('../../../assets/equal.png')} style={styles.image} />
-                    <TextInput style={[styles.textStyle]} value={computeRideIncome(dayInfo) + " RON/CURSA"} keyboardType='numeric' maxLength={2} editable={false} />
+                <View style={[styles.smallerTextStyle, styles.summaryOutput, styles.green, styles.center, { flexDirection: 'row', width: 150 }]}>
+                    <Image source={require('../../../assets/plus.png')} style={styles.image} />
+                    <TextInput style={[styles.smallerTextStyle]} value={computeRideIncome(dayInfo) + " RON/CURSA"} keyboardType='numeric' maxLength={2} editable={false} />
                 </View>
             </View>
             <View style={styles.buttonsContainer}>
@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
     image: {
         width: 20,
         height: 20,
-        marginHorizontal: 5
+        marginRight: 5,
     },
     button: {
         borderRadius: 20,
-        padding: 10,
+        padding: 15,
         elevation: 2,
         marginHorizontal: 10
     },
@@ -112,7 +112,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontSize: 20,
+        fontSize: 16,
+    },
+    smallerTextStyle: {
+        color: 'black',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontSize: 14
     },
     label: {
         color: 'black',
@@ -133,13 +140,13 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 10,
         width: 110,
-        height: 50,
+        height: 40,
         marginHorizontal: 5
     },
     summaryOutput: {
         borderRadius: 15,
         padding: 10,
-        width: 150,
+        width: 120,
         height: 50,
     },
     blue: {
@@ -155,7 +162,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 10,
-        width: "80%",
+        width: "100%",
     },
     summaryStatistics: {
         borderRadius: 15,
