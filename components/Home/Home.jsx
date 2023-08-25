@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native';
 import Menu from './header/Menu'
 import AddButton from './header/AddButton';
 import MonthsBar from './monthsBar/MonthsBar';
@@ -10,9 +10,11 @@ import InfoModal from './infoModal/InfoModal';
 import data from './content/data';
 import { useEffect } from 'react';
 import { computeNetIncome } from './computeUtils';
+import MenuModal from './menuModal/menuModal';
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [infoModalVisible, setInfoModalVisible] = useState(false);
+    const [menuModalVisible, setMenuModalVisible] = useState(false);
     const [dayInfo, setDayInfo] = useState({});
     const [months, setMonths] = useState([
         { id: 0, name: 'Ianuarie' },
@@ -45,7 +47,7 @@ export default function Home({ navigation }) {
         <View style={styles.container}>
             {/* adding modal */}
             <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
@@ -64,7 +66,7 @@ export default function Home({ navigation }) {
             </Modal>
             {/* info modal */}
             <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={infoModalVisible}
                 onRequestClose={() => {
@@ -79,8 +81,32 @@ export default function Home({ navigation }) {
                     />
                 </ScrollView>
             </Modal>
+            {/* menu modal */}
+            <Modal
+                animationType='fade'
+                transparent={true}
+                visible={menuModalVisible}
+                onRequestClose={() => {
+                    setMenuModalVisible(!menuModalVisible)
+                }}
+            >
+                <TouchableOpacity
+                    style={styles.menuView}
+                    activeOpacity={1}
+                    onPressOut={() => { setMenuModalVisible(false) }}
+                >
+
+                    <MenuModal
+                        menuModalVisible={menuModalVisible}
+                        setMenuModalVisible={setMenuModalVisible}
+                    />
+                </TouchableOpacity>
+            </Modal>
             <View style={styles.header}>
-                <Menu />
+                <Menu
+                    menuModalVisible={menuModalVisible}
+                    setMenuModalVisible={setMenuModalVisible}
+                />
                 <AddButton
                     modalVisible={modalVisible}
                     setModalVisible={setModalVisible}
@@ -132,4 +158,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(181, 181, 181, 0.53)',
         flex: 1,
     },
+    //menu Modal
+    menuView: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        backgroundColor: 'rgba(181, 181, 181, 0.53)',
+        flex: 1,
+    }
 })

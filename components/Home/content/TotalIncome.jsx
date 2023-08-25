@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     },
     totalText: {
         fontSize: 20,
-        fontWeight: 600
+        fontWeight: 'bold'
     },
     totalDisplay: {
         backgroundColor: '#fff',
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     totalDisplaySum: {
         color: '#007B0C',
         fontSize: 25,
-        fontWeight: 700
+        fontWeight: 'bold'
     }
 })
