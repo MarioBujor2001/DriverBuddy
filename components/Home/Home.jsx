@@ -35,12 +35,18 @@ export default function Home({ navigation }) {
     useEffect(() => {
         const filtered = data.filter((e) => parseInt(e.date.split('.')[1]) === monthSelected + 1)
         setUsedData(filtered);
-        setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2))
+        setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
     }, [monthSelected])
 
     const handleAddEntry = (entry) => {
         const updated = [...usedData, entry];
         setUsedData(updated);
+    }
+
+    const handleDeleteEntry = (entry) => {
+        const filtered = usedData.filter((element) => element.id !== entry.id);
+        setUsedData(filtered);
+        setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
     }
 
     return (
@@ -124,6 +130,7 @@ export default function Home({ navigation }) {
                     setInfoModalVisible={setInfoModalVisible}
                     setDayInfo={setDayInfo}
                     usedData={usedData}
+                    handleDeleteEntry={handleDeleteEntry}
                 />
                 <TotalIncome month={months[monthSelected].name} total={total} />
             </View>

@@ -6,7 +6,7 @@ export default function MonthItem({ month, selected, changeSelectedMonth }) {
             style={month.id === selected ? [styles.monthItem, styles.shadowProp] : styles.monthItem}
             onPress={() => { changeSelectedMonth(month.id); }}
         >
-            <Text>{month.name}</Text>
+            <Text style={styles.boldText}>{month.name}</Text>
         </TouchableOpacity>
     );
 }
@@ -29,4 +29,8 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         backgroundColor: '#ddd',
     },
+    boldText: {
+        fontWeight: '600'
+    }
+    ,
 })

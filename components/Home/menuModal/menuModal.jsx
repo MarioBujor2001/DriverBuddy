@@ -8,12 +8,27 @@ export default function MenuModal({ menuModalVisible, setMenuModalVisible }) {
         >
             <View
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.innerModalView}
             >
-                <View style={styles.buttonsContainer}>
-
+                <View style={styles.headerContainer}>
+                    <Text style={[styles.label, styles.grey]}>Meniu</Text>
                 </View>
-                <View style={styles.detailsContainer}>
-
+                <View style={styles.optionsContainer}>
+                    <TouchableOpacity style={styles.optionItem}>
+                        <Image source={require('../../../assets/user.png')} style={styles.image} />
+                        <Text style={styles.label}>Profil</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionItem}>
+                        <Image source={require('../../../assets/stats.png')} style={styles.image} />
+                        <Text style={styles.label}>Grafice</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionItem}>
+                        <Image source={require('../../../assets/setting.png')} style={styles.image} />
+                        <Text style={styles.label}>Setari</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <Text style={[styles.label, styles.grey]}>© BujuSoft</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -25,9 +40,10 @@ const styles = StyleSheet.create({
         width: '45%',
         height: '100%',
         backgroundColor: 'white',
-        padding: 20,
+        paddingVertical: 10,
         paddingTop: 90,
-        justifyContent: 'space-between',
+        paddingBottom: 20,
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         shadowColor: '#000',
         shadowOffset: {
@@ -37,35 +53,35 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
     },
+    innerModalView: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginBottom: 30
+    },
+    optionsContainer: {
+        flexGrow: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%'
+    },
+    optionItem: {
+        flexDirection: 'row',
+        marginVertical: 25,
+        width: '65%',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        // backgroundColor: 'grey'
+    },
     image: {
         width: 20,
         height: 20,
-        marginRight: 5,
-    },
-    button: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    buttonAdd: {
-        backgroundColor: '#6BCF6F',
-    },
-    buttonClose: {
-        backgroundColor: '#EFA8A8',
-    },
-    textStyle: {
-        color: 'black',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        fontSize: 16,
-    },
-    smallerTextStyle: {
-        color: 'black',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        fontSize: 14
+        marginRight: 15,
     },
     label: {
         color: 'black',
@@ -73,76 +89,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         fontSize: 20,
-        width: 90
     },
-    modalText: {
-        textAlign: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10
-    },
-    textInput: {
-        backgroundColor: '#D9D9D9',
-        borderRadius: 15,
-        padding: 10,
-        width: 110,
-        height: 40,
-        marginHorizontal: 5
-    },
-    summaryOutput: {
-        borderRadius: 15,
-        padding: 10,
-        width: 120,
-        height: 50,
-    },
-    blue: {
-        backgroundColor: '#90BBE2'
-    },
-    red: {
-        backgroundColor: '#EFA8A8'
-    },
-    green: {
-        backgroundColor: '#92E290'
-    },
-    summaryContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 10,
-        width: "100%",
-    },
-    summaryStatistics: {
-        borderRadius: 15,
-        height: 50,
-    },
-    buttonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        marginTop: 10,
-    },
-    dayContainer: {
-        backgroundColor: '#D9D9D9',
-        borderRadius: 15,
-        padding: 10,
-        marginBottom: 10
-    },
-    detailsContainer: {
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        width: '100%'
-    },
-    input: {
-        marginVertical: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center'
-    },
-    header: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%'
-    },
-    center: {
-        justifyContent: 'center',
-        alignItems: 'center'
+    grey: {
+        color: 'grey'
     }
 })

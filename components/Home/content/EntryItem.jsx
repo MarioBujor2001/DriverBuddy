@@ -1,25 +1,41 @@
-import { StyleSheet, SafeAreaView, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, Alert, TouchableOpacity } from 'react-native';
 import { computeNetIncome, computeCost, computeIncome } from '../computeUtils';
-export default function EntryItem({ item, openInfo, setInfoModalVisible }) {
+export default function EntryItem({ item, openInfo, handleDeleteEntry }) {
     return (
         <TouchableOpacity
             onPress={() => { openInfo(item); }}
+            onLongPress={() => {
+                Alert.alert('Confirmare', 'Doriti sa stergeti inregistrarea curenta ?', [
+                    {
+                        text: 'Anulare',
+                        onPress: () => {
+                            //do nothing
+                        }
+                    },
+                    {
+                        text: 'Da',
+                        onPress: () => {
+                            handleDeleteEntry(item);
+                        }
+                    },
+                ])
+            }}
         >
             <View style={styles.item}>
                 <View style={[styles.indicator, styles.date]}>
-                    <Text>{item.date.substr(0, 5)}</Text>
+                    <Text style={styles.boldText}>{item.date.substr(0, 5)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.km]}>
-                    <Text>{item.km} KM</Text>
+                    <Text style={styles.boldText}>{item.km} KM</Text>
                 </View>
                 <View style={[styles.indicator, styles.income]}>
-                    <Text>+ {computeIncome(item)}</Text>
+                    <Text style={styles.boldText}>+ {computeIncome(item)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.cost]}>
-                    <Text>- {computeCost(item)}</Text>
+                    <Text style={styles.boldText}>- {computeCost(item)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.netIncome]}>
-                    <Text>= {computeNetIncome(item)}</Text>
+                    <Text style={styles.boldText}>= {computeNetIncome(item)}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -66,5 +82,8 @@ const styles = StyleSheet.create({
     netIncome: {
         backgroundColor: '#92E290',
         width: 65
+    },
+    boldText: {
+        fontWeight: '600'
     }
 })

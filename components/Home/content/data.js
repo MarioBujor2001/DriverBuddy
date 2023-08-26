@@ -149,7 +149,7 @@ export default arrayOfObjectsWithId = [
         income: 4500,
         ridesIncome: 702,
         tipsIncome: 58,
-        date: '26.08.2023',
+        date: '22.08.2023',
         gasCons: 12,
         gasPrice: 4.3,
         noRides: 50,
@@ -157,6 +157,18 @@ export default arrayOfObjectsWithId = [
     },
     {
         id: 13,
+        km: 280,
+        income: 4500,
+        ridesIncome: 702,
+        tipsIncome: 58,
+        date: '23.08.2023',
+        gasCons: 12,
+        gasPrice: 4.3,
+        noRides: 50,
+        noHours: 4
+    },
+    {
+        id: 14,
         km: 255,
         ridesIncome: 712,
         tipsIncome: 86,
@@ -167,7 +179,7 @@ export default arrayOfObjectsWithId = [
         noHours: 12
     },
     {
-        id: 14,
+        id: 15,
         km: 255,
         income: 4500,
         ridesIncome: 628,
