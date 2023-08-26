@@ -1,32 +1,15 @@
-import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-import { formatDateToDdMmYyyy } from '../computeUtils';
-export default function AddModal({ modalVisible, setModalVisible, handleAddEntry, usedData }) {
-    const [km, setKm] = useState(0);
-    const [ridesIncome, setRidesIncome] = useState(0);
-    const [tipsIncome, setTipsIncome] = useState(0);
-    const [gasCons, setGasCons] = useState(0);
-    const [gasPrice, setGasPrice] = useState(0);
-    const [noRides, setNoRides] = useState(0);
-    const [noHours, setNoHours] = useState(0);
+import { useState } from 'react';
+export default function UpdateModal({ updateModalVisible, setUpdateModalVisible, updateEntry, handleUpdateEntry }) {
+    const [km, setKm] = useState(updateEntry.km);
+    const [ridesIncome, setRidesIncome] = useState(updateEntry.ridesIncome);
+    const [tipsIncome, setTipsIncome] = useState(updateEntry.tipsIncome);
+    const [gasCons, setGasCons] = useState(updateEntry.gasCons);
+    const [gasPrice, setGasPrice] = useState(updateEntry.gasPrice);
+    const [noRides, setNoRides] = useState(updateEntry.noRides);
+    const [noHours, setNoHours] = useState(updateEntry.noHours);
 
-    useEffect(() => {
-        for (e of usedData) {
-            if (e.date === formatDateToDdMmYyyy(new Date())) {
-                Alert.alert('Eroare', `Au fost deja introduse date pentru ziua curenta`, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => {
-                            //do smth
-                        }
-                    }
-                ]);
-                setModalVisible(!modalVisible);
-            }
-        }
-    }, [])
-
-    const handleAddEntryValidation = () => {
+    const handleUpdateEntryValidation = () => {
         const entryList = [km, ridesIncome, tipsIncome, gasCons, gasPrice, noRides, noHours];
         for (e of entryList) {
             if (e === 0) {
@@ -43,8 +26,8 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
         }
         //TODO: add the entry if there is no missing input
         //FIXME: atm it just closes it
-        handleAddEntry({ date: formatDateToDdMmYyyy(new Date()), gasCons, gasPrice, id: 1000, km, noHours, noRides, ridesIncome, tipsIncome });
-        setModalVisible(!modalVisible);
+        handleUpdateEntry({ date: updateEntry.date, gasCons, gasPrice, id: updateEntry.id, km, noHours, noRides, ridesIncome, tipsIncome });
+        setUpdateModalVisible(!updateModalVisible);
     }
 
     return (
@@ -53,64 +36,59 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
             style={styles.modalView}>
             <View style={styles.detailsContainer}>
                 <View style={styles.header}>
-                    <Text style={styles.modalText}>Adauga detalii pentru ziua</Text>
+                    <Text style={styles.modalText}>Modifica detalii pentru ziua</Text>
                     <View style={styles.dayContainer}>
-                        <Text style={styles.textStyle}>{formatDateToDdMmYyyy(new Date())}</Text>
+                        <Text style={styles.textStyle}>{updateEntry.date}</Text>
                     </View>
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.label}>KM:</Text>
                     <TextInput
-                        style={[styles.textStyle, styles.textInput, km === "" ? styles.errorTextInput : null]}
-                        placeholder='--- KM' keyboardType='numeric'
-                        maxLength={4}
-                        onChangeText={(value) => { setKm(parseInt(value)) }}
-                    />
-                </View>
-                <View style={styles.input}>
-                    <Text
-                        style={styles.label}>Venituri:</Text>
-                    <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder='--- RON'
+                        defaultValue={updateEntry.km.toString()}
                         keyboardType='numeric'
                         maxLength={4}
-                        onChangeText={(value) => { setRidesIncome(parseInt(value)) }}
-                    />
+                        onChangeText={(value) => { setKm(parseInt(value)) }} />
+                </View>
+                <View style={styles.input}>
+                    <Text style={styles.label}>Venituri:</Text>
+                    <TextInput
+                        style={[styles.textStyle, styles.textInput]}
+                        defaultValue={updateEntry.ridesIncome.toString()}
+                        keyboardType='numeric'
+                        maxLength={4}
+                        onChangeText={(value) => { setRidesIncome(parseInt(value)) }} />
                     <Image
                         source={require('../../../assets/plus.png')}
                         style={styles.image} />
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder='--- RON'
+                        defaultValue={updateEntry.tipsIncome.toString()}
                         keyboardType='numeric'
                         maxLength={4}
-                        onChangeText={(value) => { setTipsIncome(parseInt(value)) }}
-                    />
+                        onChangeText={(value) => { setTipsIncome(parseInt(value)) }} />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.label}>Consum:</Text>
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder='-- %'
+                        defaultValue={updateEntry.gasCons.toString()}
                         keyboardType='numeric'
                         maxLength={2}
-                        onChangeText={(value) => { setGasCons(parseInt(value)) }}
-                    />
+                        onChangeText={(value) => { setGasCons(parseInt(value)) }} />
                     <Image source={require('../../../assets/gas-station.png')} style={styles.image} />
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder='-- RON'
+                        defaultValue={updateEntry.gasPrice.toString()}
                         keyboardType='numeric'
                         maxLength={4}
-                        onChangeText={(value) => { setGasPrice(parseFloat(value.replace(',', '.'))) }}
-                    />
+                        onChangeText={(value) => { setGasPrice(parseFloat(value.replace(',', '.'))) }} />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.label}>Curse:</Text>
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder=''
+                        defaultValue={updateEntry.noRides.toString()}
                         keyboardType='numeric'
                         maxLength={4}
                         onChangeText={(value) => { setNoRides(parseInt(value)) }} />
@@ -119,23 +97,22 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <Text style={styles.label}>Ore:</Text>
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder='-- H'
+                        defaultValue={updateEntry.noHours.toString()}
                         keyboardType='numeric'
                         maxLength={2}
                         onChangeText={(value) => { setNoHours(parseInt(value)) }} />
                 </View>
             </View>
-
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity
                     style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text style={styles.textStyle}>Inchide</Text>
+                    onPress={() => setUpdateModalVisible(!updateModalVisible)}>
+                    <Text style={styles.textStyle}>Anuleaza</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.button, styles.buttonAdd]}
-                    onPress={() => { handleAddEntryValidation(); }}>
-                    <Text style={styles.textStyle}>Adauga</Text>
+                    onPress={() => handleUpdateEntryValidation()}>
+                    <Text style={styles.textStyle}>Salveaza</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -162,7 +139,7 @@ const styles = StyleSheet.create({
     image: {
         width: 20,
         height: 20,
-        marginHorizontal: 5
+        marginRight: 5,
     },
     button: {
         borderRadius: 20,
@@ -182,6 +159,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         fontSize: 16,
+    },
+    smallerTextStyle: {
+        color: 'black',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontSize: 14
     },
     label: {
         color: 'black',
@@ -205,14 +189,35 @@ const styles = StyleSheet.create({
         height: 40,
         marginHorizontal: 5
     },
-    errorTextInput: {
-        borderColor: 'red',
-        borderWidth: 2,
+    summaryOutput: {
+        borderRadius: 15,
+        padding: 10,
+        width: 120,
+        height: 50,
+    },
+    blue: {
+        backgroundColor: '#90BBE2'
+    },
+    red: {
+        backgroundColor: '#EFA8A8'
+    },
+    green: {
+        backgroundColor: '#92E290'
+    },
+    summaryContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        width: "100%",
+    },
+    summaryStatistics: {
+        borderRadius: 15,
+        height: 50,
     },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginTop: 10
+        marginTop: 10,
     },
     dayContainer: {
         backgroundColor: '#D9D9D9',
@@ -235,5 +240,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%'
+    },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

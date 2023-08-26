@@ -11,10 +11,12 @@ import data from './content/data';
 import { useEffect } from 'react';
 import { computeNetIncome } from './computeUtils';
 import MenuModal from './menuModal/menuModal';
+import UpdateModal from './updateModal/UpdateModal';
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [infoModalVisible, setInfoModalVisible] = useState(false);
     const [menuModalVisible, setMenuModalVisible] = useState(false);
+    const [updateModalVisible, setUpdateModalVisible] = useState(false);
     const [dayInfo, setDayInfo] = useState({});
     const [months, setMonths] = useState([
         { id: 0, name: 'Ianuarie' },
@@ -32,21 +34,45 @@ export default function Home({ navigation }) {
     const [monthSelected, setMonthSelected] = useState(new Date().getMonth());
     const [total, setTotal] = useState(0);
     const [usedData, setUsedData] = useState(data);
+    const [updateEntry, setUpdateEntry] = useState({});
+
     useEffect(() => {
         const filtered = data.filter((e) => parseInt(e.date.split('.')[1]) === monthSelected + 1)
         setUsedData(filtered);
         setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
     }, [monthSelected])
 
+    const updateTotal = (array) => {
+        setTotal(array.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
+    }
+
     const handleAddEntry = (entry) => {
         const updated = [...usedData, entry];
         setUsedData(updated);
+        // setTotal(updated.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
+        updateTotal(updated);
     }
 
     const handleDeleteEntry = (entry) => {
         const filtered = usedData.filter((element) => element.id !== entry.id);
         setUsedData(filtered);
-        setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
+        // setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
+        updateTotal(filtered);
+    }
+
+    const handleOpenUpdateEntry = (entry) => {
+        setUpdateEntry(entry);
+        setUpdateModalVisible(true);
+    }
+
+    const handleUpdateEntry = (entry) => {
+        let index = usedData.findIndex(item => item.id === entry.id);
+        if (index !== -1) {
+            let replacement = [...usedData];
+            replacement[index] = entry;
+            setUsedData(replacement);
+            updateTotal(replacement);
+        }
     }
 
     return (
@@ -84,6 +110,24 @@ export default function Home({ navigation }) {
                         infoModalVisible={infoModalVisible}
                         setInfoModalVisible={setInfoModalVisible}
                         dayInfo={dayInfo}
+                    />
+                </ScrollView>
+            </Modal>
+            {/* update modal */}
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={updateModalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setUpdateModalVisible(!updateModalVisible);
+                }}>
+                <ScrollView contentContainerStyle={styles.absoluteView} keyboardShouldPersistTaps='handled'>
+                    <UpdateModal
+                        updateModalVisible={updateModalVisible}
+                        setUpdateModalVisible={setUpdateModalVisible}
+                        updateEntry={updateEntry}
+                        handleUpdateEntry={handleUpdateEntry}
                     />
                 </ScrollView>
             </Modal>
@@ -131,6 +175,7 @@ export default function Home({ navigation }) {
                     setDayInfo={setDayInfo}
                     usedData={usedData}
                     handleDeleteEntry={handleDeleteEntry}
+                    handleOpenUpdateEntry={handleOpenUpdateEntry}
                 />
                 <TotalIncome month={months[monthSelected].name} total={total} />
             </View>

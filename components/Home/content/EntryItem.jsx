@@ -1,11 +1,11 @@
 import { StyleSheet, SafeAreaView, View, Text, Alert, TouchableOpacity } from 'react-native';
 import { computeNetIncome, computeCost, computeIncome } from '../computeUtils';
-export default function EntryItem({ item, openInfo, handleDeleteEntry }) {
+export default function EntryItem({ item, openInfo, handleDeleteEntry, handleOpenUpdateEntry }) {
     return (
         <TouchableOpacity
             onPress={() => { openInfo(item); }}
             onLongPress={() => {
-                Alert.alert('Confirmare', 'Doriti sa stergeti inregistrarea curenta ?', [
+                Alert.alert('Modificare', 'Doriti sa modificati inregistrarea curenta ?', [
                     {
                         text: 'Anulare',
                         onPress: () => {
@@ -13,9 +13,15 @@ export default function EntryItem({ item, openInfo, handleDeleteEntry }) {
                         }
                     },
                     {
-                        text: 'Da',
+                        text: 'Sterge',
                         onPress: () => {
                             handleDeleteEntry(item);
+                        }
+                    },
+                    {
+                        text: 'Editeaza',
+                        onPress: () => {
+                            handleOpenUpdateEntry(item);
                         }
                     },
                 ])
