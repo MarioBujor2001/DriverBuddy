@@ -63,6 +63,7 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <TextInput
                         style={[styles.textStyle, styles.textInput, km === "" ? styles.errorTextInput : null]}
                         placeholder='--- KM' keyboardType='numeric'
+                        placeholderTextColor="#9e9e9e"
                         maxLength={4}
                         onChangeText={(value) => { setKm(parseInt(value)) }}
                     />
@@ -73,6 +74,7 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
                         placeholder='--- RON'
+                        placeholderTextColor="#9e9e9e"
                         keyboardType='numeric'
                         maxLength={4}
                         onChangeText={(value) => { setRidesIncome(parseInt(value)) }}
@@ -83,6 +85,7 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
                         placeholder='--- RON'
+                        placeholderTextColor="#9e9e9e"
                         keyboardType='numeric'
                         maxLength={4}
                         onChangeText={(value) => { setTipsIncome(parseInt(value)) }}
@@ -93,6 +96,7 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
                         placeholder='-- %'
+                        placeholderTextColor="#9e9e9e"
                         keyboardType='numeric'
                         maxLength={2}
                         onChangeText={(value) => { setGasCons(parseInt(value)) }}
@@ -101,6 +105,7 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
                         placeholder='-- RON'
+                        placeholderTextColor="#9e9e9e"
                         keyboardType='numeric'
                         maxLength={4}
                         onChangeText={(value) => { setGasPrice(parseFloat(value.replace(',', '.'))) }}
@@ -110,7 +115,6 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <Text style={styles.label}>Curse:</Text>
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
-                        placeholder=''
                         keyboardType='numeric'
                         maxLength={4}
                         onChangeText={(value) => { setNoRides(parseInt(value)) }} />
@@ -120,6 +124,7 @@ export default function AddModal({ modalVisible, setModalVisible, handleAddEntry
                     <TextInput
                         style={[styles.textStyle, styles.textInput]}
                         placeholder='-- H'
+                        placeholderTextColor="#9e9e9e"
                         keyboardType='numeric'
                         maxLength={2}
                         onChangeText={(value) => { setNoHours(parseInt(value)) }} />

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Alert, SafeAreaView } from 'react-native';
 import Menu from './header/Menu'
 import AddButton from './header/AddButton';
 import MonthsBar from './monthsBar/MonthsBar';
@@ -76,7 +76,7 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* adding modal */}
             <Modal
                 animationType="fade"
@@ -149,6 +149,7 @@ export default function Home({ navigation }) {
                     <MenuModal
                         menuModalVisible={menuModalVisible}
                         setMenuModalVisible={setMenuModalVisible}
+                        navigation={navigation}
                     />
                 </TouchableOpacity>
             </Modal>
@@ -179,19 +180,20 @@ export default function Home({ navigation }) {
                 />
                 <TotalIncome month={months[monthSelected].name} total={total} />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'grey',
+        backgroundColor: '#fff',
+        paddingStart: 5,
+        paddingEnd: 5,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // backgroundColor: 'grey',
         height: 70
     },
     monthsBar: {

@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Image, Pressable, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
 import { computeNetIncome, computeCost, computeHourlyIncome, computeRideIncome, computeIncome } from '../computeUtils';
-export default function MenuModal({ menuModalVisible, setMenuModalVisible }) {
+export default function MenuModal({ menuModalVisible, setMenuModalVisible, navigation }) {
     return (
         <TouchableOpacity
             style={styles.modalView}
@@ -22,7 +22,13 @@ export default function MenuModal({ menuModalVisible, setMenuModalVisible }) {
                         <Image source={require('../../../assets/stats.png')} style={styles.image} />
                         <Text style={styles.label}>Grafice</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.optionItem}>
+                    <TouchableOpacity
+                        style={styles.optionItem}
+                        onPress={() => {
+                            navigation.navigate('Settings');
+                            setMenuModalVisible(false);
+                        }}
+                    >
                         <Image source={require('../../../assets/setting.png')} style={styles.image} />
                         <Text style={styles.label}>Setari</Text>
                     </TouchableOpacity>
