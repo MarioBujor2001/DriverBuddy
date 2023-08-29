@@ -178,7 +178,7 @@ export default function Home({ navigation }) {
                     handleDeleteEntry={handleDeleteEntry}
                     handleOpenUpdateEntry={handleOpenUpdateEntry}
                 />
-                <TotalIncome month={months[monthSelected].name} total={total} />
+                <TotalIncome month={months[monthSelected].name} total={total} navigation={navigation} />
             </View>
         </SafeAreaView>
     )

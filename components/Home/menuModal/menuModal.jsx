@@ -22,6 +22,10 @@ export default function MenuModal({ menuModalVisible, setMenuModalVisible, navig
                         <Image source={require('../../../assets/stats.png')} style={styles.image} />
                         <Text style={styles.label}>Grafice</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionItem}>
+                        <Image source={require('../../../assets/target.png')} style={styles.image} />
+                        <Text style={styles.label}>Obiective</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.optionItem}
                         onPress={() => {

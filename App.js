@@ -4,6 +4,7 @@ import { NavigationContainer, StackActions, DefaultTheme } from '@react-navigati
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './components/Home/Home';
 import Settings from './components/Settings/Settings';
+import MonthTotal from './components/MonthTotal/MonthTotal';
 const Stack = createNativeStackNavigator();
 
 const MyTheme = {
@@ -19,8 +20,9 @@ export default function App() {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false, headerStyle: { borderBottomWidth: 0 } }} />
+        <Stack.Screen name="Settings" component={Settings} options={{ headerShadowVisible: false }} />
+        <Stack.Screen name="MonthTotal" component={MonthTotal} options={{ headerShadowVisible: false }} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>

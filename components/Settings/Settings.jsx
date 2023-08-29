@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Switch } from "react-native";
+import { View, StyleSheet, Text, Switch, ScrollView } from "react-native";
 import { useState } from "react";
 import Line from "./Line";
 export default function Settings() {
@@ -6,7 +6,7 @@ export default function Settings() {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    return (<View style={styles.container}>
+    return (<ScrollView contentContainerStyle={styles.container}>
         <View style={styles.settingsContainer}>
             <View style={styles.settingsHeader}>
                 <Text style={[styles.textStyle, { marginBottom: 10 }]}>Setari comisioane</Text>
@@ -75,16 +75,17 @@ export default function Settings() {
                 }}
             />
         </View>
-    </View >)
+    </ScrollView >)
 
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#d1d1d1',
+        backgroundColor: 'white',
         width: '100%',
         height: '100%',
         alignItems: 'center',
+
     },
     settingsContainer: {
         backgroundColor: 'white',
@@ -92,10 +93,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         height: '31%',
-        marginTop: 10
-    },
-    settingsHeader: {
-
+        marginTop: 10,
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#171717',
+        shadowOpacity: 0.4,
+        shadowRadius: 6,
+        // borderColor: 'grey',
+        // borderWidth: 0.5
     },
     settingsItem: {
         flexDirection: 'row',
