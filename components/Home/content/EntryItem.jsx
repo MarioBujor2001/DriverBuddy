@@ -41,7 +41,7 @@ export default function EntryItem({ item, openInfo, handleDeleteEntry, handleOpe
                     <Text style={styles.boldText}>- {computeCost(item)}</Text>
                 </View>
                 <View style={[styles.indicator, styles.netIncome]}>
-                    <Text style={styles.boldText}>= {computeNetIncome(item)}</Text>
+                    <Text style={styles.boldText}>= {computeNetIncome(item).toFixed(2)}</Text>
                 </View>
             </View>
         </TouchableOpacity>

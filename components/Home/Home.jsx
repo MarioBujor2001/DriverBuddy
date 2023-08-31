@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Alert, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Modal, TouchableOpacity, ScrollView, Alert, SafeAreaView } from 'react-native';
 import Menu from './header/Menu'
 import AddButton from './header/AddButton';
 import MonthsBar from './monthsBar/MonthsBar';
@@ -10,8 +10,9 @@ import InfoModal from './infoModal/InfoModal';
 import data from './content/data';
 import { useEffect } from 'react';
 import { computeNetIncome } from './computeUtils';
-import MenuModal from './menuModal/menuModal';
+import MenuModal from './menuModal/MenuModal';
 import UpdateModal from './updateModal/UpdateModal';
+import axios from 'axios';
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [infoModalVisible, setInfoModalVisible] = useState(false);
@@ -37,9 +38,22 @@ export default function Home({ navigation }) {
     const [updateEntry, setUpdateEntry] = useState({});
 
     useEffect(() => {
-        const filtered = data.filter((e) => parseInt(e.date.split('.')[1]) === monthSelected + 1)
-        setUsedData(filtered);
-        setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
+        axios.get(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries?month=${monthSelected + 1}`)
+            .then((resp) => {
+                setUsedData(resp.data);
+            })
+            .catch((err) => { console.error(err.toJSON()); })
+    }, [])
+
+    useEffect(() => {
+        axios.get(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries?month=${monthSelected + 1}`)
+            .then((resp) => {
+                setUsedData(resp.data);
+                updateTotal(resp.data);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })
     }, [monthSelected])
 
     const updateTotal = (array) => {
@@ -47,16 +61,21 @@ export default function Home({ navigation }) {
     }
 
     const handleAddEntry = (entry) => {
+        //TODO: axios.post
+        axios.post(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries`, entry)
+            .then((resp) => { console.log('da'); })
+            .catch((err) => { console.log('nu'); })
         const updated = [...usedData, entry];
         setUsedData(updated);
-        // setTotal(updated.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
         updateTotal(updated);
     }
 
     const handleDeleteEntry = (entry) => {
+        axios.delete(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries/${entry.id}`)
+            .then((resp) => { console.log('da'); })
+            .catch((err) => { console.log('nu'); })
         const filtered = usedData.filter((element) => element.id !== entry.id);
         setUsedData(filtered);
-        // setTotal(filtered.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
         updateTotal(filtered);
     }
 

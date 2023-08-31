@@ -1,8 +1,18 @@
-import { View, StyleSheet, Text, ScrollView } from "react-native";
-import { useState } from "react";
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
+import { useEffect, useState } from "react";
 import { VictoryBar, VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
 import CircularProgress from "react-native-circular-progress-indicator";
+import axios from "axios";
 export default function MonthTotal() {
+
+    // useEffect(() => {
+    //     axios.get('https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries')
+    //         .then((resp) => {
+    //             console.log(resp.data);
+    //         })
+    //         .catch((err) => { console.error(err.data); })
+    // }, [])
+
     const data = [
         { x: '1-7', y: 50 },
         { x: '8-14', y: 100 },
