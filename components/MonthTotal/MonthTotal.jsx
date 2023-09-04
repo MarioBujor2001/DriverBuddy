@@ -3,15 +3,78 @@ import { useEffect, useState } from "react";
 import { VictoryBar, VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import axios from "axios";
-export default function MonthTotal() {
+import { computeNetIncome } from "../Home/computeUtils";
+export default function MonthTotal({ route, navigation }) {
 
-    // useEffect(() => {
-    //     axios.get('https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries')
-    //         .then((resp) => {
-    //             console.log(resp.data);
-    //         })
-    //         .catch((err) => { console.error(err.data); })
-    // }, [])
+    const { usedData } = route.params;
+    const [formatedData, setFormatedData] = useState(null);
+    const [total, setTotal] = useState(0);
+    const [rides, setRides] = useState(0);
+    const [hours, setHours] = useState(0);
+
+    const updateTotal = (array) => {
+        setTotal(array.reduce((acc, curr) => acc + computeNetIncome(curr), 0).toFixed(2));
+    }
+    const updateRides = (array) => {
+        setRides(array.reduce((acc, curr) => acc + curr.noRides, 0));
+    }
+    const updateHours = (array) => {
+        setHours(array.reduce((acc, curr) => acc + curr.noHours, 0));
+    }
+
+    const updateScreen = (array) => {
+        updateTotal(array);
+        updateHours(array);
+        updateRides(array);
+    }
+
+    useEffect(() => {
+        const groupedData = groupByPeriod(usedData);
+        const data = Object.entries(groupedData).map(([period, income]) => ({ x: period, y: income }));
+        setFormatedData(data);
+        updateScreen(usedData);
+    }, [])
+
+    function groupByPeriod(dataArray) {
+        const currentDate = new Date();
+        const currentMonthLastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+        const periods = {};
+
+        for (let i = 1; i <= 5; i++) {
+            let startDay = (i - 1) * 7 + 1;
+            let endDay = i * 7;
+
+            // Adjust the end day for the last period
+            if (i === 5) {
+                endDay = currentMonthLastDay;
+            }
+
+            periods[`${startDay}-${endDay}`] = 0;
+        }
+
+        dataArray.forEach(item => {
+            const dateParts = item.date.split('.');
+            const day = parseInt(dateParts[0]);
+            const periodNumber = Math.ceil(day / 7);
+            let startDay = (periodNumber - 1) * 7 + 1;
+            let endDay = periodNumber * 7;
+
+            // Adjust the end day for the last period
+            if (periodNumber === 5) {
+                endDay = currentMonthLastDay;
+            }
+
+            const periodKey = `${startDay}-${endDay}`;
+
+            if (!periods[periodKey]) {
+                periods[periodKey] = 0;
+            }
+
+            periods[periodKey] += item.ridesIncome;
+        });
+
+        return periods;
+    }
 
     const data = [
         { x: '1-7', y: 50 },
@@ -46,33 +109,36 @@ export default function MonthTotal() {
                 <View style={styles.headerSection}>
                     <Text style={styles.subtitle}>Venituri Nete</Text>
                     <View style={styles.headerSubsection}>
-                        <Text style={[styles.subtitle, { fontWeight: '700' }]}>2200.2 RON</Text>
+                        <Text style={[styles.subtitle, { fontWeight: '700' }]}>{total} RON</Text>
                         <Text >Crestere 20%</Text>
                     </View>
                 </View>
                 <View style={styles.headerSection}>
                     <View style={styles.headerSubsection}>
                         <Text style={styles.subtitle}>Curse</Text>
-                        <Text >200</Text>
+                        <Text >{rides}</Text>
                     </View>
                     <View style={styles.headerSubsection}>
                         <Text style={styles.subtitle}>Ore</Text>
-                        <Text >1200</Text>
+                        <Text >{hours}</Text>
                     </View>
                 </View>
             </View>
             <View>
-                <VictoryChart theme={VictoryTheme.material} height={300} domainPadding={20}>
-                    <VictoryBar
-                        data={data}
-                        barWidth={20}
-                        animate={{
-                            duration: 2000,
-                            onLoad: { duration: 1000 }
-                        }}
-                        cornerRadius={{ bottom: 12, top: 12 }}
-                    />
-                </VictoryChart>
+                {formatedData !== null ?
+                    <VictoryChart theme={VictoryTheme.material} height={300} domainPadding={20}>
+                        <VictoryBar
+                            data={formatedData}
+                            barWidth={20}
+                            animate={{
+                                duration: 2000,
+                                onLoad: { duration: 1000 }
+                            }}
+                            cornerRadius={{ bottom: 12, top: 12 }}
+                        />
+                    </VictoryChart>
+                    : null
+                }
             </View>
             <View style={styles.goalsContainer}>
                 <View style={styles.goalsItem}>

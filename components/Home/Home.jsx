@@ -13,6 +13,7 @@ import { computeNetIncome } from './computeUtils';
 import MenuModal from './menuModal/MenuModal';
 import UpdateModal from './updateModal/UpdateModal';
 import axios from 'axios';
+import { APIURL } from '../APIURL';
 export default function Home({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [infoModalVisible, setInfoModalVisible] = useState(false);
@@ -38,7 +39,7 @@ export default function Home({ navigation }) {
     const [updateEntry, setUpdateEntry] = useState({});
 
     useEffect(() => {
-        axios.get(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries?month=${monthSelected + 1}`)
+        axios.get(`${APIURL}/entries?month=${monthSelected + 1}`)
             .then((resp) => {
                 setUsedData(resp.data);
             })
@@ -46,7 +47,7 @@ export default function Home({ navigation }) {
     }, [])
 
     useEffect(() => {
-        axios.get(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries?month=${monthSelected + 1}`)
+        axios.get(`${APIURL}/entries?month=${monthSelected + 1}`)
             .then((resp) => {
                 setUsedData(resp.data);
                 updateTotal(resp.data);
@@ -61,8 +62,7 @@ export default function Home({ navigation }) {
     }
 
     const handleAddEntry = (entry) => {
-        //TODO: axios.post
-        axios.post(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries`, entry)
+        axios.post(`${APIURL}/entries`, entry)
             .then((resp) => { console.log('da'); })
             .catch((err) => { console.log('nu'); })
         const updated = [...usedData, entry];
@@ -71,7 +71,7 @@ export default function Home({ navigation }) {
     }
 
     const handleDeleteEntry = (entry) => {
-        axios.delete(`https://4c47-2a02-2f0f-c104-ef00-7494-fc6b-e4d-7fe6.ngrok-free.app/entries/${entry.id}`)
+        axios.delete(`${APIURL}/entries/${entry.id}`)
             .then((resp) => { console.log('da'); })
             .catch((err) => { console.log('nu'); })
         const filtered = usedData.filter((element) => element.id !== entry.id);
@@ -86,6 +86,9 @@ export default function Home({ navigation }) {
 
     const handleUpdateEntry = (entry) => {
         let index = usedData.findIndex(item => item.id === entry.id);
+        axios.put(`${APIURL}/entries`, entry)
+            .then((resp) => { console.log(resp.data); })
+            .catch((err) => { console.log(err.message); })
         if (index !== -1) {
             let replacement = [...usedData];
             replacement[index] = entry;
@@ -197,7 +200,11 @@ export default function Home({ navigation }) {
                     handleDeleteEntry={handleDeleteEntry}
                     handleOpenUpdateEntry={handleOpenUpdateEntry}
                 />
-                <TotalIncome month={months[monthSelected].name} total={total} navigation={navigation} />
+                <TotalIncome
+                    month={months[monthSelected].name}
+                    total={total}
+                    navigation={navigation}
+                    usedData={usedData} />
             </View>
         </SafeAreaView>
     )

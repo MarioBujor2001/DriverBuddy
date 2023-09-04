@@ -1,12 +1,12 @@
 import { StyleSheet, SafeAreaView, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-export default function TotalIncome({ month, total, navigation }) {
+export default function TotalIncome({ month, total, navigation, usedData }) {
     return (
         <View style={styles.totalIncomeContainer}>
             <Text style={styles.totalText}>Venituri totale luna {month}</Text>
             <TouchableOpacity
                 style={styles.totalDisplay}
-                onPress={() => { navigation.navigate('MonthTotal') }}
+                onPress={() => { navigation.navigate('MonthTotal', { usedData }) }}
             >
                 <Text style={styles.totalDisplaySum}>+ {total} RON</Text>
             </TouchableOpacity>
